@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="forest">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Climate Solutions</title>
+  <link href="/css/main.css" rel="stylesheet" />
+</head>
+<body>
+
+   <div class="navbar bg-base-100 shadow-md">
+    <div class="flex-1">
+      <a class="btn btn-ghost text-xl" href="/">Climate Solutions</a>
+    </div>
+    <div class="flex-none gap-2">
+      <ul class="menu menu-horizontal px-1">
+        <li><a href="/about">About</a></li>
+        <li>
+          <details>
+            <summary>Sector</summary>
+            <ul class="p-2 bg-base-100">
+              <li><a href="/solutions/projects?sector=industry">Industry</a></li>
+              <li><a href="/solutions/projects?sector=transport">Transport</a></li>
+              <li><a href="/solutions/projects?sector=agriculture">Agriculture</a></li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container mx-auto my-8">
+    <div class="hero bg-base-200 rounded-lg p-10 mb-10">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold">Climate Solutions</h1>
+          <p class="py-6">Know your options! Be a responsible human being.</p>
+                 </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="card bg-base-100 shadow-xl flex flex-col">
+        <figure><img src="/images/plant.jpg" alt="Planting Trees" class="h-48 w-full object-cover rounded-t-lg"/></figure>
+        <div class="card-body">
+          <h2 class="card-title">Plant more trees</h2>
+          <p>We Need to Plant More Trees for a Healthier Planet.</p>
+          <div class="card-actions justify-end">
+            <a href="https://forestscanada.ca/en/article/we-need-to-plant-more-trees-for-a-healthier-planet" class="btn btn-secondary">Learn More</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-xl flex flex-col">
+        <figure><img src="/images/car.jpg" alt="Electric Car" class="h-48 w-full object-cover rounded-t-lg"/></figure>
+        <div class="card-body">
+          <h2 class="card-title">More electric vehicle</h2>
+          <p>8 benefits of driving an electric car</p>
+          <div class="card-actions justify-end">
+            <a href="https://www.beneva.ca/en/blog/vehicle/benefits-electric-vehicle" class="btn btn-secondary">Learn More</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-xl flex flex-col">
+        <figure><img src="/images/recycle.jpg" alt="Recycling" class="h-48 w-full object-cover rounded-t-lg"/></figure>
+        <div class="card-body">
+          <h2 class="card-title">Reduce Waste Pollution</h2>
+          <p>Stop relying so heavily on single-use items</p>
+          <div class="card-actions justify-end">
+            <a href="https://www.thepersonal.com/on/en/blog/prevention/10-ways-to-reduce-waste-at-home.html#" class="btn btn-secondary">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
