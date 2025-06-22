@@ -6,6 +6,7 @@
 *  https://www.senecapolytechnic.ca/about/policies/academic-integrity-policy.html
 * 
 *  Name: John Richard Amparo Student ID: 121943245 Date: June 20, 2025
+*  Published URL: 
 *
 ********************************************************************************/
 const projectData = require("./modules/projects");
@@ -13,6 +14,7 @@ const express = require('express');
 const app = express();
 app.use(express.static('public'));
 app.use('/images', express.static('images'));
+app.use(express.static(__dirname + '/public'));
 
 const HTTP_PORT = process.env.PORT || 8080;
 
