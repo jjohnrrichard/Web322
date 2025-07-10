@@ -73,8 +73,8 @@ projectData.initialize().then(() => {
     });
   });
 
- // app.listen(HTTP_PORT, () => console.log(`server listening on: ${HTTP_PORT}`));
- module.exports = app;
+ app.listen(HTTP_PORT, () => console.log(`server listening on: ${HTTP_PORT}`));
+ //module.exports = app;
 
 }).catch(err => {
   console.log("Initialization failed:", err);
