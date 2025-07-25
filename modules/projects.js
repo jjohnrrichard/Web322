@@ -1,5 +1,5 @@
-//const sectorData = require('../data/sectorData.json');
-//const projectData = require('../data/projectData.json');
+const sectorData = require('../data/sectorData.json');
+const projectData = require('../data/projectData.json');
 
 require('dotenv').config();
 require('pg');
