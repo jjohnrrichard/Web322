@@ -1,5 +1,5 @@
-const sectorData = require('../data/sectorData.json');
-const projectData = require('../data/projectData.json');
+//const sectorData = require('../data/sectorData.json');
+//const projectData = require('../data/projectData.json');
 
 require('dotenv').config();
 require('pg');
@@ -71,11 +71,11 @@ function getProjectsBySector(sectorId) {
 function getProjectById(id) {
   return Project.findByPk(id, { include: [Sector] });
 }
-
 function getAllSectors() {
-  return Sector.findAll();
+  return Sector.findAll().then(sectors =>
+    Array.from(new Map(sectors.map(s => [s.sector_name, s])).values())
+  );
 }
-
 function addProject(projectData) {
   return Project.create(projectData);
 }

@@ -5,12 +5,13 @@
 * 
 *  https://www.senecapolytechnic.ca/about/policies/academic-integrity-policy.html
 * 
-*  Name: John Richard Amparo Student ID: 121943245 Date: July 23, 2025
+*  Name: John Richard Amparo Student ID: 121943245 Date: July 25, 2025
 *  Published URL: https://web322-gyry.vercel.app/
 *
 ********************************************************************************/
 const express = require('express');
 const app = express();
+const path = require('path');
 const projectData = require("./modules/projects");
 
 app.use(express.static('public'));
@@ -30,7 +31,7 @@ projectData.initialize().then(() => {
 app.get('/', async (req, res) => {
   try {
     const projects = await projectData.getAllProjects();
-    const latestProjects = projects.slice(-3).reverse(); // Show the latest 3
+    const latestProjects = projects.slice(-3).reverse(); 
     res.render('home', { projects: latestProjects });
   } catch (err) {
     res.status(500).render('404', { message: 'Failed to load homepage projects.' });
