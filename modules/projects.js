@@ -1,77 +1,135 @@
-const projectData = require("../data/projectData");
-const sectorData = require("../data/sectorData");
+const sectorData = require('../data/sectorData.json');
+const projectData = require('../data/projectData.json');
 
-let projects = [];
+require('dotenv').config();
+require('pg');
+const Sequelize = require('sequelize');
+
+const sequelize = new Sequelize(
+  process.env.PGDATABASE,
+  process.env.PGUSER,
+  process.env.PGPASSWORD,
+  {
+    host: process.env.PGHOST,
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
+  }
+);
+
+const Sector = sequelize.define('Sector', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  sector_name: Sequelize.STRING
+}, {
+  createdAt: false,
+  updatedAt: false
+});
+
+const Project = sequelize.define('Project', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  title: Sequelize.STRING,
+  feature_img_url: Sequelize.STRING,
+  summary_short: Sequelize.TEXT,
+  intro_short: Sequelize.TEXT,
+  impact: Sequelize.TEXT,
+  original_source_url: Sequelize.STRING,
+  sector_id: Sequelize.INTEGER
+}, {
+  createdAt: false,
+  updatedAt: false
+});
+
+Project.belongsTo(Sector, { foreignKey: 'sector_id' });
 
 function initialize() {
-    return new Promise((resolve, reject)=> {
-        try {
-            projects = projectData.map(proj => {
-                let sector = sectorData.find(sec => sec.id === proj.sector_id);
-                return {
-                    ...proj,
-                    sector: sector ? sector.sector_name : "Unknown"
-                };
-            });
-            resolve();
-        } catch (err) {
-            reject("Could not initialize the project.");
-        }
-    });
+  return sequelize.sync();
 }
 
 function getAllProjects() {
-    return new Promise((resolve, reject)=> {
-        if (projects.length > 0)
-            resolve(projects);
-        else
-            reject("No available projects.");
-    });
+  return Project.findAll({ include: [Sector] });
 }
 
-function getProjectById(projectId) {
-    return new Promise((resolve, reject)=> {
-        let found = projects.find(p => p.id === projectId);
-        if (found)
-            resolve(found);
-        else
-            reject("Project not found, select another id");
-    });
+function getProjectsBySector(sectorId) {
+  return Project.findAll({
+    where: { sector_id: sectorId },
+    include: [Sector]
+  });
 }
 
-function getProjectsBySector(sector) {
-    return new Promise((resolve, reject)=> {
-        let match = projects.filter(p => 
-            p.sector.toLowerCase().includes(sector.toLowerCase())
-        );
-        if (match.length > 0)
-            resolve(match);
-        else
-            reject("Project not found, select another sector");
-    });
+function getProjectById(id) {
+  return Project.findByPk(id, { include: [Sector] });
+}
+
+function getAllSectors() {
+  return Sector.findAll();
+}
+
+function addProject(projectData) {
+  return Project.create(projectData);
+}
+
+function editProject(id, projectData) {
+  return new Promise((resolve, reject) => {
+    Project.update(projectData, {
+      where: { id }
+    })
+      .then(() => resolve())
+      .catch(err => reject(err.errors[0].message));
+  });
+}
+
+function deleteProject(id) {
+  return new Promise((resolve, reject) => {
+    Project.destroy({
+      where: { id }
+    })
+      .then(() => resolve())
+      .catch(err => reject(err.errors[0].message));
+  });
 }
 
 module.exports = {
-    initialize,
-    getAllProjects,
-    getProjectById,
-    getProjectsBySector
+  initialize,
+  getAllProjects,
+  getProjectById,
+  getProjectsBySector,
+  getAllSectors,
+  addProject,
+  editProject,
+  deleteProject
 };
 
-//initialize().then(() => {
-  //  console.log(getAllProjects());
-//});
+/*sequelize
+  .sync()
+  .then(async () => {
+    try {
+      await Sector.bulkCreate(sectorData);
+      await Project.bulkCreate(projectData);
 
-/*initialize().then(() => {
-    getProjectsBySector("ind")
-        .then(data => console.log(data))
-        .catch(err => console.log(err));
-});
+      await sequelize.query(`SELECT setval(pg_get_serial_sequence('"Sectors"', 'id'), (SELECT MAX(id) FROM "Sectors"))`);
+      await sequelize.query(`SELECT setval(pg_get_serial_sequence('"Projects"', 'id'), (SELECT MAX(id) FROM "Projects"))`);
 
-initialize().then(() => {
-    getProjectById(31)
-   .then(data => console.log(data))
-      .catch(err => console.log(err));
-});*/
-
-
+      console.log("-----");
+      console.log("data inserted successfully");
+    } catch (err) {
+      console.log("-----");
+      console.log(err.message);
+      // Common error: FK violation if a project's sector_id doesn't exist in sectorData
+    }
+    process.exit();
+  })
+  .catch((err) => {
+    console.log('Unable to connect to the database:', err);
+  });*/

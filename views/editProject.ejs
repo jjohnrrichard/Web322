@@ -1,0 +1,54 @@
+<!-- views/editProject.ejs -->
+<%- include('partials/navbar', { page: '' }) %>
+
+<section class="p-6 max-w-4xl mx-auto">
+  <h1 class="text-3xl font-bold mb-4">Edit Project: <%= project.title %></h1>
+
+  <form action="/solutions/editProject" method="POST" class="space-y-4">
+    <input type="hidden" name="id" value="<%= project.id %>">
+
+    <div>
+      <label class="block font-medium">Title</label>
+      <input type="text" name="title" value="<%= project.title %>" required class="w-full p-2 border rounded">
+    </div>
+
+    <div>
+      <label class="block font-medium">Feature Image URL</label>
+      <input type="url" name="feature_img_url" value="<%= project.feature_img_url %>" required class="w-full p-2 border rounded">
+    </div>
+
+    <div>
+      <label class="block font-medium">Sector</label>
+      <select name="sector_id" required class="w-full p-2 border rounded">
+        <% sectors.forEach(sector => { %>
+          <option value="<%= sector.id %>" <%= (project.sector_id == sector.id) ? "selected" : "" %>><%= sector.sector_name %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div>
+      <label class="block font-medium">Intro (Short)</label>
+      <textarea name="intro_short" required class="w-full p-2 border rounded"><%= project.intro_short %></textarea>
+    </div>
+
+    <div>
+      <label class="block font-medium">Summary (Short)</label>
+      <textarea name="summary_short" required class="w-full p-2 border rounded"><%= project.summary_short %></textarea>
+    </div>
+
+    <div>
+      <label class="block font-medium">Impact</label>
+      <textarea name="impact" required class="w-full p-2 border rounded"><%= project.impact %></textarea>
+    </div>
+
+    <div>
+      <label class="block font-medium">Original Source URL</label>
+      <input type="url" name="original_source_url" value="<%= project.original_source_url %>" required class="w-full p-2 border rounded">
+    </div>
+
+    <div class="flex gap-4">
+      <button type="submit" class="btn btn-success">Update Project</button>
+      <a href="/solutions/deleteProject/<%= project.id %>" class="btn btn-error">Delete Project</a>
+    </div>
+  </form>
+</section>

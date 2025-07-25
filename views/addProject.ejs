@@ -1,0 +1,15 @@
+<h1>Add New Project</h1>
+<form method="POST" action="/projects/add">
+  <input type="text" name="title" placeholder="Title" required><br>
+  <input type="text" name="feature_img_url" placeholder="Image URL"><br>
+  <textarea name="summary_short" placeholder="Summary"></textarea><br>
+  <textarea name="intro_short" placeholder="Intro"></textarea><br>
+  <textarea name="impact" placeholder="Impact"></textarea><br>
+  <input type="text" name="original_source_url" placeholder="Source URL"><br>
+  <select name="sector_id">
+    <% sectors.forEach(s => { %>
+      <option value="<%= s.id %>"><%= s.sector_name %></option>
+    <% }) %>
+  </select><br>
+  <button type="submit">Add Project</button>
+</form>

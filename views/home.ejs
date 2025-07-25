@@ -29,19 +29,21 @@
     </div>
   </div>-->
 
-  <div class="container mx-auto my-8">
+ <div class="container mx-auto my-8">
     <div class="hero bg-base-200 rounded-lg p-10 mb-10">
       <div class="hero-content text-center">
         <div class="max-w-md">
           <h1 class="text-5xl font-bold">Climate Solutions</h1>
           <p class="py-6">Know your options! Be a responsible human being.</p>
-                 </div>
+        </div>
       </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="card bg-base-100 shadow-xl flex flex-col">
-        <figure><img src="https://www.vintagetreecare.com/wp-content/uploads/2023/06/planting-tree-1024x683.jpg" alt="Planting Trees" class="h-48 w-full object-cover rounded-t-lg"/></figure>
+        <figure>
+          <img src="https://www.vintagetreecare.com/wp-content/uploads/2023/06/planting-tree-1024x683.jpg" alt="Planting Trees" class="h-48 w-full object-cover rounded-t-lg"/>
+        </figure>
         <div class="card-body">
           <h2 class="card-title">Plant more trees</h2>
           <p>We Need to Plant More Trees for a Healthier Planet.</p>
@@ -52,7 +54,9 @@
       </div>
 
       <div class="card bg-base-100 shadow-xl flex flex-col">
-        <figure><img src="https://www.currencytransfer.com/wp-content/uploads/2022/11/ev-2-edit.min_.jpg" alt="Electric Car" class="h-48 w-full object-cover rounded-t-lg"/></figure>
+        <figure>
+          <img src="https://www.currencytransfer.com/wp-content/uploads/2022/11/ev-2-edit.min_.jpg" alt="Electric Car" class="h-48 w-full object-cover rounded-t-lg"/>
+        </figure>
         <div class="card-body">
           <h2 class="card-title">More electric vehicle</h2>
           <p>8 benefits of driving an electric car</p>
@@ -63,7 +67,9 @@
       </div>
 
       <div class="card bg-base-100 shadow-xl flex flex-col">
-        <figure><img src="https://scx1.b-cdn.net/csz/news/800a/2018/recycle.jpg" alt="Recycling" class="h-48 w-full object-cover rounded-t-lg"/></figure>
+        <figure>
+          <img src="https://scx1.b-cdn.net/csz/news/800a/2018/recycle.jpg" alt="Recycling" class="h-48 w-full object-cover rounded-t-lg"/>
+        </figure>
         <div class="card-body">
           <h2 class="card-title">Reduce Waste Pollution</h2>
           <p>Stop relying so heavily on single-use items</p>
@@ -73,6 +79,31 @@
         </div>
       </div>
     </div>
+
+    <% if (projects && projects.length > 0) { %>
+      <div class="mt-12">
+        <h2 class="text-3xl font-bold mb-6 text-center">Latest Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <% projects.forEach(project => { %>
+            <div class="card bg-base-100 shadow-xl flex flex-col">
+              <figure>
+                <img src="<%= project.feature_img_url %>" alt="<%= project.title %>" class="h-48 w-full object-cover rounded-t-lg"/>
+              </figure>
+              <div class="card-body">
+                <h2 class="card-title"><%= project.title %></h2>
+                <p><%= project.summary_short.substring(0, 80) %>...</p>
+                <div class="card-actions justify-end">
+                  <!--<a href="/solutions/projects/edit/<%= project.id %>" class="btn btn-secondary">View</a>-->
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    <% } else { %>
+      <p class="text-center text-gray-400 mt-10">No climate projects to show yet.</p>
+    <% } %>
+
   </div>
 </body>
 </html>
